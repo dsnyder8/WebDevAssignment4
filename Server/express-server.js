@@ -1,6 +1,5 @@
 import express from 'express';
-import { connectDB } from './MongoDB/express-mongo.js';
-
+import
 const app = express();
 await connectDB();
 app.use(express.json()); // Essential Middleware

@@ -1,12 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const ExerciseSchema = new Schema({
-  user_name: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   description: {
     type: String,
     required: true,
@@ -42,3 +37,5 @@ const ExerciseSchema = new Schema({
     default: null,
   },
 });
+
+export default mongoose.model("Exercise", ExerciseSchema);

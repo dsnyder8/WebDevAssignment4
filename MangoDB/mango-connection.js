@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const mongoDB = "mongodb+srv://snyderdakota8_db_user:Mochaskids%2312345@dak8.j268xof.mongodb.net/todo_db?appName=Dak8";
+const mongoDB = "mongodb+srv://snyderdakota8_db_user:Mochaskids%2312345@dak8.j268xof.mongodb.net/workout_api?appName=Dak8";
 
 export async function connectDB() {
     try {
