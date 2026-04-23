@@ -1,0 +1,13 @@
+import mongoose from "mongoose";
+
+const mongoDB = "mongodb+srv://snyderdakota8_db_user:Mochaskids%2312345@dak8.j268xof.mongodb.net/todo_db?appName=Dak8";
+
+export async function connectDB() {
+    try {
+        await mongoose.connect(mongoDB);
+        console.log("mongoDB connected");
+    } catch (err) {
+        console.error("mongoDB connection error:", err.message);
+        process.exit(1);
+    }
+}
