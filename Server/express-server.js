@@ -104,6 +104,9 @@ app.delete("/api/exercises/:id", async(req, res) => {
     }
 });
 
+
+//Need to add the user routes here Stopped here for now to work on the models and connection to MongoDB. Will add the user routes after I have the models and connection working.
+
 app.listen(3000, "0.0.0.0", () => {
     console.log("Server is running on port 3000");
 });
