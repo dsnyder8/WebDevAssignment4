@@ -28,14 +28,8 @@ const ExerciseSchema = new Schema({
     ref: "User",
     required: true,
   },
-  timeCreated: {
-    type: Date,
-    default: Date.now,
-  },
-  timeCompleted: {
-    type: Date,
-    default: null,
-  },
-});
+}, {timestamps: true});
+
+
 
 export default mongoose.model("Exercise", ExerciseSchema);

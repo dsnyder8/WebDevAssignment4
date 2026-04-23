@@ -1,5 +1,7 @@
 import express from 'express';
-import
+import{ connectDB} from './MangoDB/mango-connection.js';
+import Exercise from './Models/ExerciseSchema.js';
+
 const app = express();
 await connectDB();
 app.use(express.json()); // Essential Middleware
@@ -8,82 +10,97 @@ app.use(express.json()); // Essential Middleware
 // ==========================================
 // NEW: GET Route (Read Data from MongoDB)
 // ==========================================
-app.get("/api/tasks", async (req, res) => {
+app.get("/api/exercises", async (req, res) => {
     let dbFilter = {};
     
-    // 2. Check if the user is asking for a specific filter
-    if (req.query.completed !== undefined) {
-        dbFilter.completed = req.query.completed === "true";
+    if (req.query.category !== undefined) {
+        dbFilter.category = req.query.category;
     }
     
-    // 1. Librarian gets the list from Mongoose using the filter
-    // Notice we use your imported 'task' here instead of readTasks()
-    let tasks = await Task.find(dbFilter);
+    let exercises = await Exercise.find(dbFilter);
     
-    // 3. Send the list to the screen/Postman
-    res.json(tasks);
+    
+    res.json(exercises);
 });
 
 // ==========================================
 // NEW: POST Route (Create Data in MongoDB)
 // ==========================================
-app.post("/api/tasks", async (req, res) => {
+app.post("/api/exercises", async (req, res) => {
     try {
         // Mongoose automatically generates a unique _id for us!
-        const newTask = await Task.create({
-            text: req.body.text, 
-            completed: req.body.completed || false 
+        const newExercise = await Exercise.create({
+            description: req.body.description, 
+            category: req.body.category,
+            targetRepetitions: req.body.targetRepetitions,
+            targetTimeDuration: req.body.targetTimeDuration,
+            user: req.body.user,
         });
         
-        // Send the newly created task back to the screen/Postman
-        res.status(201).json(newTask); 
+        // Send the newly created exercise back to the screen/Postman
+        res.status(201).json(newExercise); 
     } catch (error) {
-        // If the user forgets to send 'text' (which is required), catch the error
-        res.status(400).json({ error: "Failed to create task. Text is required." });
+        // If the user forgets to send 'description' (which is required), catch the error
+        res.status(400).json({ error: "Failed to create exercise. Description is required." });
     }
 });
 
 // ==========================================
 // UPDATED: PUT Route (Update Data in MongoDB)
 // ==========================================
-app.put("/api/tasks/:id", async(req, res) => {
+app.put("/api/exercises/:id", async(req, res) => {
     try {
-        const task = await Task.findById(req.params.id);
-        if (!task) {
-            return res.status(404).json({ error: "Task not found" });
+        const exercise = await Exercise.findById(req.params.id);
+        if (!exercise) {
+            return res.status(404).json({ error: "Exercise not found" });
         }
         
         // Update fields if provided
-        if (req.body.text !== undefined) {
-            task.text = req.body.text;
+        if (req.body.description !== undefined) {
+            exercise.description = req.body.description;
         }
-        if (req.body.completed !== undefined) {
-            task.completed = req.body.completed;
+        if (req.body.category !== undefined) {
+            exercise.category = req.body.category;
+        }
+        if (req.body.targetRepetitions !== undefined) {
+            exercise.targetRepetitions = req.body.targetRepetitions;
+        }
+        if (req.body.targetTimeDuration !== undefined) {
+            exercise.targetTimeDuration = req.body.targetTimeDuration;
+        }
+        if (req.body.user !== undefined) {
+            exercise.user = req.body.user;
+        }
+        if (req.body.timeCreated !== undefined) {
+            exercise.timeCreated = req.body.timeCreated;
+        }
+        if (req.body.timeCompleted !== undefined) {
+            exercise.timeCompleted = req.body.timeCompleted;
         }
         
-        await task.save();
-        res.json(task);
+        await exercise.save();
+        res.json(exercise);
     } catch (error) {
         // This catches invalid ID formats so your server doesn't crash
-        res.status(400).json({ error: "Invalid task ID" });
+        res.status(400).json({ error: "Invalid exercise ID" });
     }
 });
 
 // ==========================================
 // UPDATED: DELETE Route (Delete Data from MongoDB)
 // ==========================================
-app.delete("/api/tasks/:id", async(req, res) => {
+app.delete("/api/exercises/:id", async(req, res) => {
     try {
-        // This single line finds it and deletes it, replacing task.remove()
-        const deletedTask = await Task.findByIdAndDelete(req.params.id);
+        // This single line finds it and deletes it, replacing exercise.remove()
+        const deletedExercise = await Exercise.findByIdAndDelete(req.params.id);
         
-        if (!deletedTask) {
-            return res.status(404).json({ error: "Task not found" });
+        if (!deletedExercise) {
+            return res.status(404).json({ error: "Exercise not found" });
         }
         
         res.status(204).send(); // 204 = No Content
     } catch (error) {
-        res.status(400).json({ error: "Invalid task ID" });
+        res.status(400).json({ error: "Invalid exercise ID" });
     }
 });
 
