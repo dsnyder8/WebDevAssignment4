@@ -1,0 +1,47 @@
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
+//MAKE SURE TO ADD POPULATE FOR THE JOINS!!!!!!!
+const workoutScheduleSchema = new Schema({
+
+    //User (Grabs from the UserSchema)
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+
+    //What day of the week it is
+    dayOfWeek: {
+        type: String,
+        enum: [
+            "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+        ],
+        required: true,
+    },
+
+    //What body part is being worked out
+    targetBodyPart: {
+        type: String,
+        enum: [
+            "Chest", "Back", "Legs", "Shoulders", "Arms", "Core", "Full Body", "Cardio"
+        ],
+        required: false,
+    },
+
+    //Exercise (Grabs from the ExerciseSchema.js)
+    exercise: {
+        type: Schema.Types.ObjectId,
+        ref: "Exercise",
+        required: false,
+    },
+
+    //Check to see if it is a rest day
+    isRestDay: {
+        type: Boolean,
+        default: false
+    }
+}, 
+
+{timestamps: true});
+
+export default mongoose.model("WorkoutSchedule", workoutScheduleSchema);
