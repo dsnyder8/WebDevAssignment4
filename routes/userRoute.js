@@ -26,4 +26,40 @@ router.post("/", async (req, res) => {
 	}
 });
 
+router.put("/:id", async (req, res) => {
+	try {
+		const updatedUser = await User.findByIdAndUpdate(
+			req.params.id,
+			{
+				user_name: req.body.user_name,
+				email: req.body.email,
+				password: req.body.password,
+			},
+			{ new: true, runValidators: true }
+		);
+
+		if (!updatedUser) {
+			return res.status(404).json({ error: "User not found" });
+		}
+
+		res.json(updatedUser);
+	} catch (error) {
+		res.status(400).json({ error: "Failed to update user" });
+	}
+});
+
+router.delete("/:id", async (req, res) => {
+	try {
+		const deletedUser = await User.findByIdAndDelete(req.params.id);
+
+		if (!deletedUser) {
+			return res.status(404).json({ error: "User not found" });
+		}
+
+		res.json({ message: "User deleted successfully" });
+	} catch (error) {
+		res.status(400).json({ error: "Failed to delete user" });
+	}
+});
+
 export default router;
