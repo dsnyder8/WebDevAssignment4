@@ -1,0 +1,548 @@
+{
+	"info": {
+		"name": "Workout API",
+		"description": "Postman tests for the Workout API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "baseUrl", "value": "http://localhost:3000" },
+		{ "key": "userId", "value": "" },
+		{ "key": "exerciseId", "value": "" },
+		{ "key": "scheduleId", "value": "" },
+		{ "key": "invalidId", "value": "000000000000000000000000" }
+	],
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create New User",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] },
+						"body": { "mode": "raw", "raw": "{\n  \"user_name\": \"jdoe\",\n  \"email\": \"jdoe@example.com\",\n  \"password\": \"secret123\"\n}" },
+						"description": "Creates a new user."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 201', () => pm.response.to.have.status(201));",
+									"const body = pm.response.json();",
+									"if (body && body._id) pm.collectionVariables.set('userId', body._id);"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] },
+						"description": "Gets all users."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get All Users (Search by username)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/users?search=jdoe",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"],
+							"query": [ { "key": "search", "value": "jdoe" } ]
+						},
+						"description": "Searches users by username."
+					}
+				},
+				{
+					"name": "Get All Users (Sorted)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/users?sort=user_name",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"],
+							"query": [ { "key": "sort", "value": "user_name" } ]
+						},
+						"description": "Sorts users by username."
+					}
+				},
+				{
+					"name": "Get All Users (Paginated)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/users?page=1&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"],
+							"query": [
+								{ "key": "page", "value": "1" },
+								{ "key": "limit", "value": "10" }
+							]
+						},
+						"description": "Gets users with pagination."
+					}
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] },
+						"description": "Gets one user by id."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] },
+						"body": { "mode": "raw", "raw": "{\n  \"email\": \"jdoe.updated@example.com\"\n}" },
+						"description": "Updates a user."
+					}
+				},
+				{
+					"name": "[Error] Get User with Invalid ID",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/api/users/not-a-real-id", "host": ["{{baseUrl}}"], "path": ["api", "users", "not-a-real-id"] },
+						"description": "Should return an error for a bad id."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 400 or 404', () => pm.expect(pm.response.code).to.be.oneOf([400, 404]));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "[Error] Create User (Missing required field)",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] },
+						"body": { "mode": "raw", "raw": "{\n  \"user_name\": \"missing_email_and_password\"\n}" },
+						"description": "Should fail because email and password are missing."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 400', () => pm.response.to.have.status(400));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "[Error] Create User (Invalid email format)",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] },
+						"body": { "mode": "raw", "raw": "{\n  \"user_name\": \"bademail\",\n  \"email\": \"not-an-email\",\n  \"password\": \"secret123\"\n}" },
+						"description": "Should fail because the email is not valid."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 400', () => pm.response.to.have.status(400));"
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Exercises",
+			"item": [
+				{
+					"name": "Create New Exercise",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/exercises", "host": ["{{baseUrl}}"], "path": ["api", "exercises"] },
+						"body": { "mode": "raw", "raw": "{\n  \"description\": \"Push-ups\",\n  \"category\": \"Warm-up\",\n  \"targetRepetitions\": 15,\n  \"user\": \"{{userId}}\"\n}" },
+						"description": "Creates an exercise for the user from the Users folder."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 201', () => pm.response.to.have.status(201));",
+									"const body = pm.response.json();",
+									"if (body && body._id) pm.collectionVariables.set('exerciseId', body._id);"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get All Exercises",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/api/exercises", "host": ["{{baseUrl}}"], "path": ["api", "exercises"] },
+						"description": "Gets all exercises."
+					}
+				},
+				{
+					"name": "Get All Exercises (Filtered by Category)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/exercises?category=Warm-up",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "exercises"],
+							"query": [ { "key": "category", "value": "Warm-up" } ]
+						},
+						"description": "Filters exercises by category."
+					}
+				},
+				{
+					"name": "Get All Exercises (Search by description)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/exercises?search=push",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "exercises"],
+							"query": [ { "key": "search", "value": "push" } ]
+						},
+						"description": "Searches exercises by description."
+					}
+				},
+				{
+					"name": "Get All Exercises (Sorted)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/exercises?sort=-createdAt",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "exercises"],
+							"query": [ { "key": "sort", "value": "-createdAt" } ]
+						},
+						"description": "Sorts exercises by newest first."
+					}
+				},
+				{
+					"name": "Get All Exercises (Paginated)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/exercises?page=1&limit=5",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "exercises"],
+							"query": [
+								{ "key": "page", "value": "1" },
+								{ "key": "limit", "value": "5" }
+							]
+						},
+						"description": "Gets exercises with pagination."
+					}
+				},
+				{
+					"name": "Get All Exercises (For a User)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/exercises?user={{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "exercises"],
+							"query": [ { "key": "user", "value": "{{userId}}" } ]
+						},
+						"description": "Gets all exercises for one user."
+					}
+				},
+				{
+					"name": "Get Exercise by ID",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/api/exercises/{{exerciseId}}", "host": ["{{baseUrl}}"], "path": ["api", "exercises", "{{exerciseId}}"] },
+						"description": "Gets one exercise by id."
+					}
+				},
+				{
+					"name": "Update Exercise",
+					"request": {
+						"method": "PUT",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/exercises/{{exerciseId}}", "host": ["{{baseUrl}}"], "path": ["api", "exercises", "{{exerciseId}}"] },
+						"body": { "mode": "raw", "raw": "{\n  \"targetRepetitions\": 20\n}" },
+						"description": "Updates an exercise."
+					}
+				},
+				{
+					"name": "[Error] Get Exercise with Invalid ID",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/api/exercises/not-a-real-id", "host": ["{{baseUrl}}"], "path": ["api", "exercises", "not-a-real-id"] },
+						"description": "Should return an error for a bad id."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 400 or 404', () => pm.expect(pm.response.code).to.be.oneOf([400, 404]));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "[Error] Create Exercise (Invalid category enum)",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/exercises", "host": ["{{baseUrl}}"], "path": ["api", "exercises"] },
+						"body": { "mode": "raw", "raw": "{\n  \"description\": \"Bad category\",\n  \"category\": \"NotARealCategory\",\n  \"user\": \"{{userId}}\"\n}" },
+						"description": "Should fail because the category is not in the list."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 400', () => pm.response.to.have.status(400));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "[Error] Create Exercise (Missing required field)",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/exercises", "host": ["{{baseUrl}}"], "path": ["api", "exercises"] },
+						"body": { "mode": "raw", "raw": "{\n  \"description\": \"No category and no user\"\n}" },
+						"description": "Should fail because category and user are missing."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 400', () => pm.response.to.have.status(400));"
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Schedules",
+			"item": [
+				{
+					"name": "Create New Schedule",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/schedules", "host": ["{{baseUrl}}"], "path": ["api", "schedules"] },
+						"body": { "mode": "raw", "raw": "{\n  \"user\": \"{{userId}}\",\n  \"dayOfWeek\": \"Monday\",\n  \"targetBodyPart\": \"Chest\",\n  \"exercise\": \"{{exerciseId}}\",\n  \"isRestDay\": false\n}" },
+						"description": "Creates a schedule that uses the user and exercise from earlier."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 201', () => pm.response.to.have.status(201));",
+									"const body = pm.response.json();",
+									"if (body && body._id) pm.collectionVariables.set('scheduleId', body._id);"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get All Schedules",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/api/schedules", "host": ["{{baseUrl}}"], "path": ["api", "schedules"] },
+						"description": "Gets all schedules."
+					}
+				},
+				{
+					"name": "Get All Schedules (Filtered by User)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/schedules?user={{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "schedules"],
+							"query": [ { "key": "user", "value": "{{userId}}" } ]
+						},
+						"description": "Filters schedules by user."
+					}
+				},
+				{
+					"name": "Get All Schedules (Sorted)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/schedules?sort=dayOfWeek",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "schedules"],
+							"query": [ { "key": "sort", "value": "dayOfWeek" } ]
+						},
+						"description": "Sorts schedules by day of week."
+					}
+				},
+				{
+					"name": "Get All Schedules (Paginated)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/schedules?page=1&limit=5",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "schedules"],
+							"query": [
+								{ "key": "page", "value": "1" },
+								{ "key": "limit", "value": "5" }
+							]
+						},
+						"description": "Gets schedules with pagination."
+					}
+				},
+				{
+					"name": "Get Schedule by ID (with populated user + exercise)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/schedules/{{scheduleId}}?populate=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "schedules", "{{scheduleId}}"],
+							"query": [ { "key": "populate", "value": "true" } ]
+						},
+						"description": "Gets a schedule with the user and exercise filled in."
+					}
+				},
+				{
+					"name": "Update Schedule",
+					"request": {
+						"method": "PUT",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/schedules/{{scheduleId}}", "host": ["{{baseUrl}}"], "path": ["api", "schedules", "{{scheduleId}}"] },
+						"body": { "mode": "raw", "raw": "{\n  \"dayOfWeek\": \"Wednesday\",\n  \"targetBodyPart\": \"Back\"\n}" },
+						"description": "Updates a schedule."
+					}
+				},
+				{
+					"name": "Delete Schedule",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseUrl}}/api/schedules/{{scheduleId}}", "host": ["{{baseUrl}}"], "path": ["api", "schedules", "{{scheduleId}}"] },
+						"description": "Deletes the schedule."
+					}
+				},
+				{
+					"name": "Delete Exercise",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseUrl}}/api/exercises/{{exerciseId}}", "host": ["{{baseUrl}}"], "path": ["api", "exercises", "{{exerciseId}}"] },
+						"description": "Deletes the exercise."
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] },
+						"description": "Deletes the user."
+					}
+				},
+				{
+					"name": "[Error] Get Schedule with Invalid ID",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/api/schedules/not-a-real-id", "host": ["{{baseUrl}}"], "path": ["api", "schedules", "not-a-real-id"] },
+						"description": "Should return an error for a bad id."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 400 or 404', () => pm.expect(pm.response.code).to.be.oneOf([400, 404]));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "[Error] Create Schedule (Invalid dayOfWeek enum)",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Content-Type", "value": "application/json" } ],
+						"url": { "raw": "{{baseUrl}}/api/schedules", "host": ["{{baseUrl}}"], "path": ["api", "schedules"] },
+						"body": { "mode": "raw", "raw": "{\n  \"user\": \"{{userId}}\",\n  \"dayOfWeek\": \"Funday\"\n}" },
+						"description": "Should fail because Funday is not a real day."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 400', () => pm.response.to.have.status(400));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "[Error] Get Schedule by Nonexistent ID",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/api/schedules/{{invalidId}}", "host": ["{{baseUrl}}"], "path": ["api", "schedules", "{{invalidId}}"] },
+						"description": "Should return 404 for an id that does not exist."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 404', () => pm.response.to.have.status(404));"
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
