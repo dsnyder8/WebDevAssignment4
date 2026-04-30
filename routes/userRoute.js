@@ -71,6 +71,7 @@ router.post("/", async (req, res) => {
 			user_name: req.body.user_name,
 			email: req.body.email,
 			password: req.body.password,
+			phone_number: req.body.phone_number,
 		});
 
 		res.status(201).json(newUser);
@@ -88,6 +89,7 @@ router.put("/:id", async (req, res) => {
 				user_name: req.body.user_name,
 				email: req.body.email,
 				password: req.body.password,
+				phone_number: req.body.phone_number,
 			},
 			{ new: true, runValidators: true }
 		);
