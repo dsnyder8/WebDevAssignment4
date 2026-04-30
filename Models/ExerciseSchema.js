@@ -24,6 +24,11 @@ const ExerciseSchema = new Schema({
     min: 1,
     max: 180,
   },
+  // For weightlifting exercises, this field can be used to specify the weight in pounds or kilograms.
+    weightUSE: {
+    type: Number,
+    required: false,
+    min: 0,  },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
