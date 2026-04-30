@@ -13,7 +13,9 @@ Fitness API uses a RESTful backend that is built with Node.js, Express Middlewar
 
 ## Collections
 Users: Profile Management with email/password validation.
+
 Exercises: Movement tracking with category enums (Warm-up, Cardio, Weightlifting, Cool-down)
+
 WorkoutSchedules: Relational mapping connecting Users and Exercises to specific days and body parts.
 
 
