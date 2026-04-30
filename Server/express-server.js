@@ -4,6 +4,7 @@ import "../Models/ExerciseSchema.js";
 import "../Models/UserSchema.js";
 import exerciseRoute from "../routes/exerciseRoute.js";
 import userRoute from "../routes/userRoute.js";
+import workOutScheduleRoute from "../routes/workOutScheduleRoute.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use("/api/exercises", exerciseRoute);
 app.use("/api/users", userRoute);
+app.use("/api/schedules", workOutScheduleRoute);
 
 app.listen(3000, "0.0.0.0", () => {
   console.log("Server is running on port 3000");
