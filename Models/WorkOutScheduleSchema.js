@@ -42,6 +42,10 @@ const workoutScheduleSchema = new Schema({
     }
 }, 
 
-{timestamps: true});
+{timestamps: true, toJSON: { virtuals: true }});
 
+// This will display everything in the format: Targeted Body Part Based On Day: "Tuesday: Chest"
+workoutScheduleSchema.virtual("Targeted Body Part Based On Day").get(function() {
+    return `${this.dayOfWeek}: ${this.targetBodyPart}`;
+  });
 export default mongoose.model("WorkoutSchedule", workoutScheduleSchema);

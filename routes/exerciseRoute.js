@@ -3,15 +3,35 @@ import Exercise from "../Models/ExerciseSchema.js";
 
 const router = express.Router();
 
+// GET ALL
 router.get("/", async (req, res) => {
 	try {
 		const dbFilter = {};
 
+		//FILITERING
 		if (req.query.category !== undefined) {
 			dbFilter.category = req.query.category;
 		}
+		if(req.query.targetBodyPart !== undefined) {
+			dbFilter.targetBodyPart = req.query.targetBodyPart;
+		}
 
-		const exercises = await Exercise.find(dbFilter);
+		//$regex
+        if (req.query.search) {
+			//The i here at the end makes is so no case sensitivity
+            dbFilter.description = { $regex: req.query.search, $options: "i" };
+        }
+
+		//SORTING
+		const sorting = req.query.sort;
+
+		//PAGINATION
+		const pageNum = parseInt(req.query.page) || 1
+		const limitOfResults = parseInt(req.query.limit) || 10
+		const skip = (pageNum - 1) * limitOfResults;
+
+
+		const exercises = await Exercise.find(dbFilter).populate("user").sort(sorting).limit(limitOfResults).skip(skip);
 		res.json(exercises);
 	} catch (error) {
 		res.status(500).json({ error: "Failed to fetch exercises" });
@@ -21,7 +41,7 @@ router.get("/", async (req, res) => {
 // GET ONE
 router.get("/:id", async (req, res) => {
 	try {
-		const exercise = await Exercise.findById(req.params.id);
+		const exercise = await Exercise.findById(req.params.id).populate("user");
 
 		if (!exercise) {
 			return res.status(404).json({ error: "Exercise not found" });
@@ -33,6 +53,7 @@ router.get("/:id", async (req, res) => {
 	}
 });
 
+//POST
 router.post("/", async (req, res) => {
 	try {
 		const newExercise = await Exercise.create({
@@ -49,6 +70,7 @@ router.post("/", async (req, res) => {
 	}
 });
 
+//UPDATE
 router.put("/:id", async (req, res) => {
 	try {
 		const exercise = await Exercise.findById(req.params.id);
@@ -79,6 +101,7 @@ router.put("/:id", async (req, res) => {
 	}
 });
 
+//DELETE
 router.delete("/:id", async (req, res) => {
 	try {
 		const deletedExercise = await Exercise.findByIdAndDelete(req.params.id);

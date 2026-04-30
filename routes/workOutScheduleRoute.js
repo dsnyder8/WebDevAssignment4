@@ -25,7 +25,31 @@ router.post("/", async (req, res) => {
 //GET ALL
 router.get("/", async (req, res) => {
     try {
-            const schedules = await Schedule.find();
+            
+
+            const dbFilter = {};
+
+            //FILITERING
+            if (req.query.dayOfWeek !== undefined) {
+                dbFilter.dayOfWeek = req.query.dayOfWeek;
+            }
+            if (req.query.targetBodyPart !== undefined) {
+                dbFilter.targetBodyPart = req.query.targetBodyPart;
+            }
+            if (req.query.isRestDay !== undefined) {
+                dbFilter.isRestDay = req.query.isRestDay === "true";
+            }
+
+            //SORTING
+		    const sorting = req.query.sort;
+
+            //PAGINATION
+		    const pageNum = parseInt(req.query.page) || 1
+		    const limitOfResults = parseInt(req.query.limit) || 10
+		    const skip = (pageNum - 1) * limitOfResults;
+
+            const schedules = await Schedule.find(dbFilter).populate("user").populate("exercise").sort(sorting).limit(limitOfResults).skip(skip);
+
             res.json(schedules);
         } catch (error) {
             res.status(500).json({ error: "Failed to get schedules" });
@@ -36,8 +60,7 @@ router.get("/", async (req, res) => {
 //GET ONE
 router.get("/:id", async (req, res) => {
     try{
-        const schedule = await Schedule.findById(req.params.id);
-
+        const schedule = await Schedule.findById(req.params.id).populate("user").populate("exercise");
         if(!schedule){
             return res.status(404).json({ error: "Schedule could not be found" });
         }
@@ -83,4 +106,6 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
+
 export default router;
+

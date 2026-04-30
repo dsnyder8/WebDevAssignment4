@@ -22,6 +22,12 @@ const UserSchema = new Schema({
     required: true,
     minlength: 6,
   },
+
+   phone_number: {
+    type: String,
+    required: true,
+    unique: true
+   }
 }, 
 
 {timestamps: true});

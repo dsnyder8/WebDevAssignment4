@@ -8,7 +8,39 @@ const router = express.Router();
 // GET ALL
 router.get("/", async (req, res) => {
 	try {
-		const users = await User.find();
+		const dbFilter = {};
+		
+
+		//FILITERING
+		if(req.query.user_name !== undefined){
+			dbFilter.user_name = req.query.user_name;
+		}
+		if (req.query.email !== undefined) {
+			dbFilter.email = req.query.email;
+		}
+		if(req.query.phone_number !== undefined){
+			dbFilter.phone_number = req.query.phone_number;
+		}
+
+		//$regex
+        if (req.query.search) {
+			//The i here at the end makes is so no case sensitivity
+            dbFilter.user_name = { $regex: req.query.search, $options: "i" };
+        }
+
+		//SORTING
+		const sorting = req.query.sort;
+
+		
+		//PAGINATION
+		const pageNum = parseInt(req.query.page) || 1
+		const limitOfResults = parseInt(req.query.limit) || 10
+		const skip = (pageNum - 1) * limitOfResults;
+
+
+
+		const users = await User.find(dbFilter).sort(sorting).limit(limitOfResults).skip(skip);
+
 		res.json(users);
 	} catch (error) {
 		res.status(500).json({ error: "Failed to fetch users" });
@@ -86,3 +118,4 @@ router.delete("/:id", async (req, res) => {
 });
 
 export default router;
+

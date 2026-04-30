@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import WorkOutScheduleSchema from "./WorkOutScheduleSchema";
 const Schema = mongoose.Schema;
 
 const ExerciseSchema = new Schema({
@@ -28,8 +29,11 @@ const ExerciseSchema = new Schema({
     ref: "User",
     required: true,
   },
-}, {timestamps: true});
+}, 
+{timestamps: true, toJSON: { virtuals: true }});
 
-
-
+// This will display everything in the format: combined: "Cardio: 1 mile run"
+ExerciseSchema.virtual("combined").get(function() {
+  return `${this.category}: ${this.description}`;
+});
 export default mongoose.model("Exercise", ExerciseSchema);
