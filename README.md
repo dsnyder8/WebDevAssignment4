@@ -1,7 +1,9 @@
 
 # Fitness API 
 Course: CISC 375
+
 Names: Luke Jordan, Josh Dunlap, Brady Sahr, Dakota Snyder
+
 Date: April 29th, 2026.
 
 
