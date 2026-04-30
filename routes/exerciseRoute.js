@@ -61,6 +61,7 @@ router.post("/", async (req, res) => {
 			category: req.body.category,
 			targetRepetitions: req.body.targetRepetitions,
 			targetTimeDuration: req.body.targetTimeDuration,
+			weightUSE: req.body.weightUSE,
 			user: req.body.user,
 		});
 
@@ -89,6 +90,9 @@ router.put("/:id", async (req, res) => {
 		}
 		if (req.body.targetTimeDuration !== undefined) {
 			exercise.targetTimeDuration = req.body.targetTimeDuration;
+		}
+		if (req.body.weightUSE !== undefined) {
+			exercise.weightUSE = req.body.weightUSE;
 		}
 		if (req.body.user !== undefined) {
 			exercise.user = req.body.user;

@@ -21,7 +21,7 @@
 						"method": "POST",
 						"header": [ { "key": "Content-Type", "value": "application/json" } ],
 						"url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] },
-						"body": { "mode": "raw", "raw": "{\n  \"user_name\": \"jdoe\",\n  \"email\": \"jdoe@example.com\",\n  \"password\": \"secret123\"\n}" },
+						"body": { "mode": "raw", "raw": "{\n  \"user_name\": \"jdoe\",\n  \"email\": \"jdoe@example.com\",\n  \"password\": \"secret123\",\n  \"phone_number\": \"555-123-4567\"\n}" },
 						"description": "Creates a new user."
 					},
 					"event": [
@@ -67,6 +67,17 @@
 						},
 						"description": "Searches users by username."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Users (Sorted)",
@@ -80,6 +91,17 @@
 						},
 						"description": "Sorts users by username."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Users (Paginated)",
@@ -96,6 +118,17 @@
 						},
 						"description": "Gets users with pagination."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get User by ID",
@@ -124,6 +157,17 @@
 						"body": { "mode": "raw", "raw": "{\n  \"email\": \"jdoe.updated@example.com\"\n}" },
 						"description": "Updates a user."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "[Error] Get User with Invalid ID",
@@ -169,7 +213,7 @@
 						"method": "POST",
 						"header": [ { "key": "Content-Type", "value": "application/json" } ],
 						"url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] },
-						"body": { "mode": "raw", "raw": "{\n  \"user_name\": \"bademail\",\n  \"email\": \"not-an-email\",\n  \"password\": \"secret123\"\n}" },
+						"body": { "mode": "raw", "raw": "{\n  \"user_name\": \"bademail\",\n  \"email\": \"not-an-email\",\n  \"password\": \"secret123\",\n  \"phone_number\": \"555-000-0000\"\n}" },
 						"description": "Should fail because the email is not valid."
 					},
 					"event": [
@@ -194,7 +238,7 @@
 						"method": "POST",
 						"header": [ { "key": "Content-Type", "value": "application/json" } ],
 						"url": { "raw": "{{baseUrl}}/api/exercises", "host": ["{{baseUrl}}"], "path": ["api", "exercises"] },
-						"body": { "mode": "raw", "raw": "{\n  \"description\": \"Push-ups\",\n  \"category\": \"Warm-up\",\n  \"targetRepetitions\": 15,\n  \"user\": \"{{userId}}\"\n}" },
+						"body": { "mode": "raw", "raw": "{\n  \"description\": \"Push-ups\",\n  \"category\": \"Warm-up\",\n  \"targetRepetitions\": 15,\n  \"weightUSE\": 0,\n  \"user\": \"{{userId}}\"\n}" },
 						"description": "Creates an exercise for the user from the Users folder."
 					},
 					"event": [
@@ -217,6 +261,17 @@
 						"url": { "raw": "{{baseUrl}}/api/exercises", "host": ["{{baseUrl}}"], "path": ["api", "exercises"] },
 						"description": "Gets all exercises."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Exercises (Filtered by Category)",
@@ -230,6 +285,17 @@
 						},
 						"description": "Filters exercises by category."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Exercises (Search by description)",
@@ -243,6 +309,17 @@
 						},
 						"description": "Searches exercises by description."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Exercises (Sorted)",
@@ -256,6 +333,17 @@
 						},
 						"description": "Sorts exercises by newest first."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Exercises (Paginated)",
@@ -272,6 +360,17 @@
 						},
 						"description": "Gets exercises with pagination."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Exercises (For a User)",
@@ -285,6 +384,17 @@
 						},
 						"description": "Gets all exercises for one user."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get Exercise by ID",
@@ -293,6 +403,17 @@
 						"url": { "raw": "{{baseUrl}}/api/exercises/{{exerciseId}}", "host": ["{{baseUrl}}"], "path": ["api", "exercises", "{{exerciseId}}"] },
 						"description": "Gets one exercise by id."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Update Exercise",
@@ -303,6 +424,17 @@
 						"body": { "mode": "raw", "raw": "{\n  \"targetRepetitions\": 20\n}" },
 						"description": "Updates an exercise."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "[Error] Get Exercise with Invalid ID",
@@ -396,6 +528,17 @@
 						"url": { "raw": "{{baseUrl}}/api/schedules", "host": ["{{baseUrl}}"], "path": ["api", "schedules"] },
 						"description": "Gets all schedules."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Schedules (Filtered by User)",
@@ -409,6 +552,17 @@
 						},
 						"description": "Filters schedules by user."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Schedules (Sorted)",
@@ -422,6 +576,17 @@
 						},
 						"description": "Sorts schedules by day of week."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Schedules (Paginated)",
@@ -438,6 +603,17 @@
 						},
 						"description": "Gets schedules with pagination."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get Schedule by ID (with populated user + exercise)",
@@ -451,6 +627,17 @@
 						},
 						"description": "Gets a schedule with the user and exercise filled in."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Update Schedule",
@@ -461,6 +648,17 @@
 						"body": { "mode": "raw", "raw": "{\n  \"dayOfWeek\": \"Wednesday\",\n  \"targetBodyPart\": \"Back\"\n}" },
 						"description": "Updates a schedule."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Delete Schedule",
@@ -469,6 +667,17 @@
 						"url": { "raw": "{{baseUrl}}/api/schedules/{{scheduleId}}", "host": ["{{baseUrl}}"], "path": ["api", "schedules", "{{scheduleId}}"] },
 						"description": "Deletes the schedule."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Delete Exercise",
@@ -477,6 +686,17 @@
 						"url": { "raw": "{{baseUrl}}/api/exercises/{{exerciseId}}", "host": ["{{baseUrl}}"], "path": ["api", "exercises", "{{exerciseId}}"] },
 						"description": "Deletes the exercise."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200 or 204', () => pm.expect(pm.response.code).to.be.oneOf([200, 204]));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Delete User",
@@ -485,6 +705,17 @@
 						"url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] },
 						"description": "Deletes the user."
 					}
+,
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "[Error] Get Schedule with Invalid ID",
