@@ -16,10 +16,14 @@ WorkoutSchedules: Relational mapping connecting Users and Exercises to specific 
 
 
 ## Installation & Setup 
-1.)Clone the repository.
+1.)Clone the repository. 
+
 2.)Run 'npm install' to install express and mongoose.
+
 3.)Verify you are in the '/Server' directory.
+
 4.)Run 'node express-server.js' to start the server.
+
 5.)The server will run on 'http://localhost:3000/' 
 
 ## Contributors
