@@ -1,8 +1,11 @@
 import express from "express";
 import User from "../Models/UserSchema.js";
 
+ 
+
 const router = express.Router();
 
+// GET ALL
 router.get("/", async (req, res) => {
 	try {
 		const users = await User.find();
@@ -12,6 +15,24 @@ router.get("/", async (req, res) => {
 	}
 });
 
+
+// GET ONE
+router.get("/:id", async (req, res) => {
+	try {
+		const user = await User.findById(req.params.id);
+
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
+
+		res.json(user);
+	} catch (error) {
+		res.status(400).json({ error: "Invalid user ID" });
+	}
+});
+
+
+// POST
 router.post("/", async (req, res) => {
 	try {
 		const newUser = await User.create({
@@ -26,6 +47,7 @@ router.post("/", async (req, res) => {
 	}
 });
 
+// UPDATE
 router.put("/:id", async (req, res) => {
 	try {
 		const updatedUser = await User.findByIdAndUpdate(
@@ -48,6 +70,7 @@ router.put("/:id", async (req, res) => {
 	}
 });
 
+//DELETE
 router.delete("/:id", async (req, res) => {
 	try {
 		const deletedUser = await User.findByIdAndDelete(req.params.id);
@@ -56,7 +79,7 @@ router.delete("/:id", async (req, res) => {
 			return res.status(404).json({ error: "User not found" });
 		}
 
-		res.json({ message: "User deleted successfully" });
+		res.json({ message: "User has been deleted" });
 	} catch (error) {
 		res.status(400).json({ error: "Failed to delete user" });
 	}

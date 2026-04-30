@@ -18,6 +18,21 @@ router.get("/", async (req, res) => {
 	}
 });
 
+// GET ONE
+router.get("/:id", async (req, res) => {
+	try {
+		const exercise = await Exercise.findById(req.params.id);
+
+		if (!exercise) {
+			return res.status(404).json({ error: "Exercise not found" });
+		}
+
+		res.json(exercise);
+	} catch (error) {
+		res.status(400).json({ error: "Invalid exercise ID" });
+	}
+});
+
 router.post("/", async (req, res) => {
 	try {
 		const newExercise = await Exercise.create({
