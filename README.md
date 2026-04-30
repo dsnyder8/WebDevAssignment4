@@ -5,24 +5,24 @@ Names: Luke Jordan, Josh Dunlap, Brady Sahr, Dakota Snyder
 Date: April 29th, 2026.
 
 
-##Overview
+## Overview
 Fitness API uses a RESTful backend that is built with Node.js, Express Middleware, and MongoDB. This API provides a system for managing a user's fitness data, that focuses on their individual exercises, Daily and Weekly routine for a more personalized workout routine that could be used as a foundation for a more refined fitness application. This project demonstrates the use of backend development principles, including relational database modeling using MongoDB, securely handling user data, and implementing CRUD (Create,Read,Update, Delete) functionality using an Express.js server.
 
 
-##Collections
+## Collections
 Users: Profile Management with email/password validation.
 Exercises: Movement tracking with category enums (Warm-up, Cardio, Weightlifting, Cool-down)
 WorkoutSchedules: Relational mapping connecting Users and Exercises to specific days and body parts.
 
 
-##Installation & Setup 
+## Installation & Setup 
 1.)Clone the repository.
 2.)Run 'npm install' to install express and mongoose.
 3.)Verify you are in the '/Server' directory.
 4.)Run 'node express-server.js' to start the server.
 5.)The server will run on 'http://localhost:3000/' 
 
-##Contributors
+## Contributors
 
 Dakota Snyder: Initialized the Node.js environment and established the database connection to MongoDB using an asynchronous function with error handling. Designed the primary User and Exercise schemas, implementing validation through string enums for categories and using ObjectIDs to create a link between users and their data. Developed the initial CRUD logic pre-routes and server patterns that provided a foundation for the team to expand the API in to modular routes.
 
