@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import { connectDB } from "../MangoDB/mongo-connection.js";
 import "../Models/ExerciseSchema.js";
@@ -15,6 +16,7 @@ app.use("/api/exercises", exerciseRoute);
 app.use("/api/users", userRoute);
 app.use("/api/schedules", workOutScheduleRoute);
 
-app.listen(3000, "0.0.0.0", () => {
-  console.log("Server is running on port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Server is running on port ${port}`);
 });

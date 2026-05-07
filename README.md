@@ -22,13 +22,15 @@ WorkoutSchedules: Relational mapping connecting Users and Exercises to specific 
 ## Installation & Setup 
 1.)Clone the repository. 
 
-2.)Run 'npm install' to install express and mongoose.
+2.)Run 'npm install' to install dependencies.
 
-3.)Verify you are in the '/Server' directory.
+3.)Copy '.env.example' to '.env' and fill in 'MONGO_URI' with your MongoDB connection string.
 
-4.)Run 'node express-server.js' to start the server.
+4.)Verify you are in the '/Server' directory.
 
-5.)The server will run on 'http://localhost:3000/' 
+5.)Run 'node express-server.js' to start the server.
+
+6.)The server will run on 'http://localhost:3000/' (or the PORT set in your .env)
 
 ## Contributors
 

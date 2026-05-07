@@ -1,10 +1,15 @@
 import mongoose from "mongoose";
 
-const mongoDB = "mongodb+srv://snyderdakota8_db_user:Mochaskids%2312345@dak8.j268xof.mongodb.net/workout_api?appName=Dak8";
-
 export async function connectDB() {
+    const mongoURI = process.env.MONGO_URI;
+
+    if (!mongoURI) {
+        console.error("MONGO_URI is not set. Copy .env.example to .env and fill it in.");
+        process.exit(1);
+    }
+
     try {
-        await mongoose.connect(mongoDB);
+        await mongoose.connect(mongoURI);
         console.log("mongoDB connected");
     } catch (err) {
         console.error("mongoDB connection error:", err.message);
