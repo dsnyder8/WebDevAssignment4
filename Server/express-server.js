@@ -13,6 +13,7 @@ const app = express();
 await connectDB();
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"));
 
 app.use("/api/exercises", exerciseRoute);
 app.use("/api/users", userRoute);

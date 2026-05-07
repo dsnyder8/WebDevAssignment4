@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness App Login</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <main class="login-shell">
+        <section class="brand">
+            <h1>Fitness Tracker</h1>
+            <p>Sign in to manage users, exercises, and weekly workout schedules in one place.</p>
+            <div class="stats">
+                <span>Track custom workouts</span>
+                <span>Review your weekly split</span>
+                <span>Keep your training history organized</span>
+            </div>
+        </section>
+
+        <section class="panel">
+            <p>Use your account details to continue</p>
+
+            <form id="loginForm" novalidate>
+                <label for="email">
+                    Email
+                    <input id="email" name="email" type="email" required>
+                </label>
+                <p></p>
+                <label for="password">
+                    Password
+                    <input id="password" name="password" type="password" minlength="6" required>
+                </label>
+                <p></p>
+                <button type="submit">Log In</button>
+            </form>
+
+            <p id="message" class="msg" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const message = document.getElementById("message");
+
+        loginForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            message.className = "msg";
+            message.textContent = "";
+
+            const formData = new FormData(loginForm);
+            const email = String(formData.get("email") || "").trim();
+            const password = String(formData.get("password") || "");
+
+            if (!email || !password) {
+                message.classList.add("bad");
+                message.textContent = "Please fill out both fields.";
+                return;
+            }
+
+            if (password.length < 6) {
+                message.classList.add("bad");
+                message.textContent = "Password must be at least 6 characters.";
+                return;
+            }
+
+            // This project currently has no login endpoint, so this confirms UI behavior only.
+            message.classList.add("ok");
+            message.textContent = "Login form submitted. Connect this form to your auth endpoint next.";
+        });
+    </script>
+</body>
+</html>
