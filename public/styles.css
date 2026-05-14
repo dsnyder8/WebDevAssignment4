@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+    color: #222;
+    background: #ece8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 16px;
+}
+
+.login-shell {
+    display: flex;
+    width: 100%;
+    max-width: 820px;
+    background: #ffffff;
+    border: 1px solid #c8c0d0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(81, 12, 118, 0.15);
+    overflow: hidden;
+}
+
+.brand {
+    flex: 1;
+    padding: 28px 26px;
+    background: #510c76;
+    color: #f6f1fa;
+}
+
+.brand h1 {
+    margin: 0 0 10px;
+    font-size: 26px;
+}
+
+.brand p {
+    margin: 0 0 18px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #e2d6ee;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stats span {
+    font-size: 12px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+}
+
+.panel {
+    flex: 1;
+    padding: 28px 26px;
+}
+
+.panel > p {
+    margin: 0 0 14px;
+    font-size: 13px;
+    color: #4a3f56;
+}
+
+#loginForm label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    color: #3d2454;
+    margin-bottom: 4px;
+}
+
+#loginForm input {
+    width: 100%;
+    padding: 7px 9px;
+    font-size: 13px;
+    font-family: inherit;
+    border: 1px solid #c8c0d0;
+    border-radius: 4px;
+    background: #ffffff;
+}
+
+#loginForm input:focus {
+    outline: none;
+    border-color: #510c76;
+}
+
+#loginForm button {
+    margin-top: 6px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    border: 0;
+    border-radius: 4px;
+    background: #510c76;
+}
+
+#loginForm button:hover:not(:disabled) {
+    background: #3d0858;
+}
+
+#loginForm button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.msg {
+    margin-top: 12px;
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    min-height: 14px;
+}
+
+.msg:empty {
+    padding: 0;
+    min-height: 0;
+}
+
+.msg.ok {
+    background: #e3f3da;
+    color: #2f5a14;
+}
+
+.msg.bad {
+    background: #f7dada;
+    color: #6e1a1a;
+}
+
+@media (max-width: 600px) {
+    .login-shell {
+        flex-direction: column;
+    }
+}
