@@ -32,6 +32,26 @@ WorkoutSchedules: Relational mapping connecting Users and Exercises to specific 
 
 6.)The server will run on 'http://localhost:3000/' (or the PORT set in your .env)
 
+## Logging In
+
+There is no registration page yet, so users must be created via the API. A shared test user is already in the dev database:
+
+- Email: smoke@test.com
+- Password: secret123
+
+To create your own user, send a POST request to 'http://localhost:3000/api/auth/register' (via Postman or curl) with a JSON body:
+
+```
+{
+  "user_name": "your_username",
+  "email": "your@email.com",
+  "password": "atleast6chars",
+  "phone_number": "555-1234"
+}
+```
+
+All four fields are required. After that, log in at 'http://localhost:3000/' with the email and password you registered.
+
 ## Contributors
 
 Dakota Snyder: Initialized the Node.js environment and established the database connection to MongoDB using an asynchronous function with error handling. Designed the primary User and Exercise schemas, implementing validation through string enums for categories and using ObjectIDs to create a link between users and their data. Developed the initial CRUD logic pre-routes and server patterns that provided a foundation for the team to expand the API in to modular routes.
