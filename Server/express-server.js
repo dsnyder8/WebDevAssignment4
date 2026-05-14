@@ -7,6 +7,7 @@ import "../Models/UserSchema.js";
 import exerciseRoute from "../routes/exerciseRoute.js";
 import userRoute from "../routes/userRoute.js";
 import workOutScheduleRoute from "../routes/workOutScheduleRoute.js";
+import authRoute from "../routes/authRoute.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.static("public"));
 app.use("/api/exercises", exerciseRoute);
 app.use("/api/users", userRoute);
 app.use("/api/schedules", workOutScheduleRoute);
+app.use("/api/auth", authRoute);
 
 const port = process.env.PORT || 3000;
 app.listen(port, "0.0.0.0", () => {
