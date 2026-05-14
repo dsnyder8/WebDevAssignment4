@@ -42,8 +42,9 @@
     <script>
         const loginForm = document.getElementById("loginForm");
         const message = document.getElementById("message");
+        const submitButton = loginForm.querySelector("button[type='submit']");
 
-        loginForm.addEventListener("submit", (event) => {
+        loginForm.addEventListener("submit", async (event) => {
             event.preventDefault();
             message.className = "msg";
             message.textContent = "";
@@ -64,9 +65,33 @@
                 return;
             }
 
-            // This project currently has no login endpoint, so this confirms UI behavior only.
-            message.classList.add("ok");
-            message.textContent = "Login form submitted. Connect this form to your auth endpoint next.";
+            submitButton.disabled = true;
+
+            try {
+                const res = await fetch("/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    message.classList.add("bad");
+                    message.textContent = data.error || "Login failed.";
+                    return;
+                }
+
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user", JSON.stringify(data.user));
+                message.classList.add("ok");
+                message.textContent = `Welcome, ${data.user.user_name}.`;
+                // TODO: redirect to dashboard.html once that page exists.
+            } catch (err) {
+                message.classList.add("bad");
+                message.textContent = "Network error. Is the server running?";
+            } finally {
+                submitButton.disabled = false;
+            }
         });
     </script>
 </body>
