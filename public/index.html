@@ -86,6 +86,8 @@
                 message.classList.add("ok");
                 message.textContent = `Welcome, ${data.user.user_name}.`;
                 // TODO: redirect to dashboard.html once that page exists.
+                window.location.href = "/dashboard.html";
+
             } catch (err) {
                 message.classList.add("bad");
                 message.textContent = "Network error. Is the server running?";
