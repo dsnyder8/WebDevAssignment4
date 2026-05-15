@@ -1,11 +1,11 @@
 import express from "express";
 import Schedule from "../Models/WorkOutScheduleSchema.js";
-
+import { requireAuth } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 //POST
-router.post("/", async (req, res) => {
+router.post("/", requireAuth, async (req, res) => {
     try {
         const newSchedule = await Schedule.create({
             user: req.body.user,
@@ -73,7 +73,7 @@ router.get("/:id", async (req, res) => {
 
 
 //UPDATE
-router.put("/:id", async (req, res) => {
+router.put("/:id",requireAuth, async (req, res) => {
     try{
         const schedule = await Schedule.findByIdAndUpdate(
             req.params.id,
@@ -92,7 +92,7 @@ router.put("/:id", async (req, res) => {
 
 
 // DELETE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", requireAuth,async (req, res) => {
     try{
         const deletedSchedule = await Schedule.findByIdAndDelete(req.params.id);
 

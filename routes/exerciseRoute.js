@@ -1,5 +1,7 @@
 import express from "express";
 import Exercise from "../Models/ExerciseSchema.js";
+import { requireAuth } from "../middleware/authMiddleware.js";
+
 
 const router = express.Router();
 
@@ -54,7 +56,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //POST
-router.post("/", async (req, res) => {
+router.post("/", requireAuth,async (req, res) => {
 	try {
 		const newExercise = await Exercise.create({
 			description: req.body.description,
@@ -72,7 +74,7 @@ router.post("/", async (req, res) => {
 });
 
 //UPDATE
-router.put("/:id", async (req, res) => {
+router.put("/:id",requireAuth, async (req, res) => {
 	try {
 		const exercise = await Exercise.findById(req.params.id);
 		if (!exercise) {
@@ -106,7 +108,7 @@ router.put("/:id", async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",requireAuth, async (req, res) => {
 	try {
 		const deletedExercise = await Exercise.findByIdAndDelete(req.params.id);
 

@@ -1,6 +1,6 @@
 import express from "express";
 import User from "../Models/UserSchema.js";
-
+import { requireAuth } from "../middleware/authMiddleware.js";
  
 
 const router = express.Router();
@@ -65,7 +65,7 @@ router.get("/:id", async (req, res) => {
 
 
 // POST
-router.post("/", async (req, res) => {
+router.post("/",requireAuth, async (req, res) => {
 	try {
 		const newUser = await User.create({
 			user_name: req.body.user_name,
@@ -81,7 +81,7 @@ router.post("/", async (req, res) => {
 });
 
 // UPDATE
-router.put("/:id", async (req, res) => {
+router.put("/:id",requireAuth, async (req, res) => {
 	try {
 		const updatedUser = await User.findByIdAndUpdate(
 			req.params.id,
@@ -105,7 +105,7 @@ router.put("/:id", async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",requireAuth, async (req, res) => {
 	try {
 		const deletedUser = await User.findByIdAndDelete(req.params.id);
 
