@@ -18,7 +18,6 @@
                 <span>Keep your training history organized</span>
             </div>
         </section>
-
         <section class="panel">
             <p>Use your account details to continue</p>
 
@@ -33,22 +32,17 @@
                     <input id="password" name="password" type="password" minlength="6" required>
                 </label>
                 <p></p>
-                <button type="submit">Log In</button>
+                
+                <div class="form-actions">
+                    <button type="submit">Log In</button>
+                    <p class="form-footer">
+                        New User? <a href="/registerUser.html">Create an account here</a>
+                    </p>
+                </div>
             </form>
 
             <p id="message" class="msg" role="status" aria-live="polite"></p>
         </section>
     </main>
-
-    <section class="panel" id="registerPanel">
-        <h3>Create Account</h3>
-        <form id="registerForm">
-            <label>Username <input name="user_name" type="text" required></label><br>
-            <label>Email <input name="email" type="email" required></label><br>
-            <label>Password <input name="password" type="password" minlength="6" required></label><br>
-            <label>Phone <input name="phone_number" type="text" required></label><br>
-            <button type="submit">Register</button>
-        </form>
-    </section>
 </body>
 </html>

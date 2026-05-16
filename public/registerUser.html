@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker - Create Account</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/auth.js" defer></script>
+</head>
+<body>
+    <main class="login-shell">
+        <section class="brand">
+            <h1>Join Fitness Tracker</h1>
+            <p>Create an account to track custom workouts, review your weekly split, and organize your training history.</p>
+        </section>
+
+        <section class="panel">
+            <p>Fill out the details below to create your account.</p>
+
+            <form id="registerForm" novalidate>
+                <label for="reg_user_name">
+                    Username
+                    <input id="reg_user_name" name="user_name" type="text" required>
+                </label>
+                <p></p>
+                <label for="reg_email">
+                    Email
+                    <input id="reg_email" name="email" type="email" required>
+                </label>
+                <p></p>
+                <label for="reg_password">
+                    Password
+                    <input id="reg_password" name="password" type="password" minlength="6" required>
+                </label>
+                <p></p>
+                <label for="reg_phone">
+                    Phone Number
+                    <input id="reg_phone" name="phone_number" type="text" required>
+                </label>
+                <p></p>
+                
+                <div class="form-actions">
+                    <button type="submit">Create Account</button>
+                    <p class="form-footer">
+                        <a href="/index.html">Back to Sign In</a>
+                    </p>
+                </div>
+            </form>
+
+            <p id="regMessage" class="msg" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+</body>
+</html>
