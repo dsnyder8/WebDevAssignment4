@@ -11,16 +11,12 @@ function getHeaders() {
     
     const token = getToken();
     if (token) {
-        // This is exactly what your backend authMiddleware is looking for!
         headers["Authorization"] = `Bearer ${token}`; 
     }
     
     return headers;
 }
 
-// --- CENTRALIZED API CALLS ---
-
-// GET ALL EXERCISES
 async function getExercises() {
     try {
         const response = await fetch("/api/exercises", {
@@ -33,7 +29,6 @@ async function getExercises() {
     }
 }
 
-// CREATE A NEW EXERCISE
 async function createExercise(exerciseData) {
     try {
         const response = await fetch("/api/exercises", {
@@ -47,7 +42,7 @@ async function createExercise(exerciseData) {
     }
 }
 
-// DELETE AN EXERCISE
+
 async function deleteExercise(id) {
     try {
         const response = await fetch(`/api/exercises/${id}`, {
