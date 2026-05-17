@@ -23,12 +23,14 @@ export const exerciseManager = {
     }
   },
 
-  // Create Exercise from api
+  // Create Exercise 
   async createExercise(exerciseData) {
     this.clearError();
 
     try {
       const exercise = await api.createExercise(exerciseData);
+      //Debugging undefined issue for why tasks arent being created
+      console.log(exercise);
       this.exercises.push(exercise);
       this.renderExercises();
     } catch (err) {
@@ -90,8 +92,6 @@ export const exerciseManager = {
     }
   }
 };
-
-exerciseManager.loadExercises();
 
 window.handleDelete = (id) => {
   exerciseManager.deleteExercise(id);

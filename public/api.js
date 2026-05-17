@@ -21,8 +21,11 @@ async function getExercises() {
     try {
         const response = await fetch("/api/exercises", {
             method: "GET",
-            headers: getHeaders()
+            headers: getHeaders(),
         });
+        if (!response.ok) {
+            throw new Error("Failed to create exercise");
+        }
         return await response.json();
     } catch (error) {
         console.error("Failed to fetch exercises:", error);
@@ -36,7 +39,8 @@ async function createExercise(exerciseData) {
             headers: getHeaders(),
             body: JSON.stringify(exerciseData)
         });
-        return await response.json();
+        const data = await response.json();
+        return data;
     } catch (error) {
         console.error("Failed to create exercise:", error);
     }
