@@ -61,4 +61,4 @@ Josh Dunlap: Built a Postman collection to test and document every API endpoint.
 
 ## Video Demonstration
 
-[![Fitness API Project Video](https://img.youtube.com/vi/brUvnQfEMh0/maxresdefault.jpg)](https://youtu.be/brUvnQfEMh0)
+[![Watch the video](https://img.youtube.com/vi/brUvnQfEMh0/maxresdefault.jpg)](https://www.youtube.com/watch?v=brUvnQfEMh0)
