@@ -6,7 +6,9 @@ export const exerciseManager = {
   elements: {
     exerciseList: document.getElementById('exerciseList'),
     exerciseError: document.getElementById('exerciseError'),
-    exerciseForm: document.getElementById('exerciseForm')
+    exerciseForm: document.getElementById('exerciseForm'),
+    filterCategory: document.getElementById('filterCategory'),
+    filterDay: document.getElementById('filterDay')
   },
 
 // Load Exercises from API
@@ -49,12 +51,29 @@ renderExercises() {
       return;
     }
 
+    const filterCategoryEl = document.getElementById('filterCategory');
+    const selectedValue = filterCategoryEl ? filterCategoryEl.value : "";
+    
+    console.log("2. Painter running. Filtering by value:", selectedValue || "ALL");
+
+    let exercisesToDraw = this.exercises;
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+    if (selectedValue !== "") {
+        if (days.includes(selectedValue)) {
+            exercisesToDraw = exercisesToDraw.filter(ex => ex.dayOfWeek === selectedValue);
+        } else {
+            exercisesToDraw = exercisesToDraw.filter(ex => ex.category === selectedValue);
+        }
+    }
+
+    console.log("3. Exercises matching this filter:", exercisesToDraw.length);
+
     let htmlContent = "";
 
-    // 1. Group the exercises that actually have a day assigned
+    // 1. Group by day
     days.forEach(day => {
-        const dailyExercises = this.exercises.filter(ex => ex.dayOfWeek === day);
+        const dailyExercises = exercisesToDraw.filter(ex => ex.dayOfWeek === day);
 
         if (dailyExercises.length > 0) {
             htmlContent += `<h3>${day}</h3>`;
@@ -65,8 +84,6 @@ renderExercises() {
                     <strong>${exercise.description}</strong>
                     <p>Category: ${exercise.category}</p>
                     <p>Reps: ${exercise.targetRepetitions || "-"}</p>
-                    <p>Time: ${exercise.targetTimeDuration || "-"}</p>
-                    <p>Weight: ${exercise.weightUSE || "-"}</p>
                     <button onclick="handleDelete('${exercise._id}')">Delete</button>
                   </div>
                 `;
@@ -75,8 +92,13 @@ renderExercises() {
         }
     });
 
+   
     
 
+    // If a filter is on but nothing matches, show a notice instead of a blank space
+    if (exercisesToDraw.length === 0 && selectedValue !== "") {
+        htmlContent = `<p style="color: gray;">No exercises match the filter: "${selectedValue}"</p>`;
+    }
 
     exerciseList.innerHTML = htmlContent;
   },
@@ -112,6 +134,9 @@ renderExercises() {
     }
   }
 };
+
+
+
 
 window.handleDelete = (id) => {
   exerciseManager.deleteExercise(id);

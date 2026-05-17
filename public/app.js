@@ -4,19 +4,42 @@ const app = {
   elements: {
     exerciseForm: document.getElementById("exerciseForm"),
     logoutBtn: document.getElementById("logoutBtn"),
+    filterCategory: document.getElementById("FilterCategory"),
   },
 
   init() {
     this.setupEventListeners();
     exerciseManager.loadExercises();
-  },
 
+    // Display the username at the top of the dashboard
+    const user = JSON.parse(localStorage.getItem("user"));
+    const usernameEl = document.getElementById("username");
+    if (user && usernameEl) {
+      usernameEl.textContent = `Welcome, ${user.user_name}!`;
+    } else if (usernameEl) {
+      usernameEl.textContent = "Welcome!";
+    }
+  },
+  
   setupEventListeners() {
     const { exerciseForm, logoutBtn } = this.elements;
+
+    // Fetch the dropdown LIVE so it's never null
+    const filterCategory = document.getElementById("filterCategory");
+
+    if (filterCategory) {
+        filterCategory.addEventListener("change", () => {
+            console.log("1. Dropdown change detected! New value is:", filterCategory.value);
+            exerciseManager.renderExercises();
+        });
+    } else {
+        console.error("CRITICAL: app.js could not find an element with id='filterCategory'");
+    }
 
     //CREATING THE EXERCISE
     exerciseForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
 
       //Need to create user since it is used in the ExerciseSchema Model
       const user = JSON.parse(localStorage.getItem("user"));

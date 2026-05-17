@@ -14,6 +14,8 @@
 -->
   <section id="dashboard">
     <h1>EXERCISE DASHBOARD</h1>
+    <!-- this needs to display the users name at the top of the page-->
+     <h2 id="username">${username}</h2>
     <button id="logoutBtn">Logout</button>
     <article class="container">
 
@@ -107,12 +109,20 @@
         
         <div id="exerciseError" class="error"></div>
         <div id="exerciseList"></div>
+        <p> Filter by: </p>
 
         <select id="filterCategory">
-            <option value="">All</option>
+     <option value="">All</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
             <option value="Cardio">Cardio</option>
             <option value="Weightlifting">Weightlifting</option>
-            <option value="Warm-Up">Warm-Up</option>
+            <option value="Warm-up">Warm-Up</option>
             <option value="Cool-down">Cool-Down</option>
         </select>
         
