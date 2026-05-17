@@ -36,8 +36,8 @@ async loadExercises() {
       this.exercises.push(exercise);
       this.renderExercises();
     } catch (err) {
-      console.error(err);
-      this.showError(`Failed to create Exercise: ${err.message}`);
+      console.error(`Failed to create Exercise:`, err);
+     
     }
   },
 
@@ -85,6 +85,7 @@ renderExercises() {
                     <p>Category: ${exercise.category}</p>
                     <p>Reps: ${exercise.targetRepetitions || "-"}</p>
                     <button onclick="handleDelete('${exercise._id}')">Delete</button>
+                    <button onclick="handleEdit('${exercise._id}')">Edit</button>
                   </div>
                 `;
             });
@@ -118,7 +119,27 @@ renderExercises() {
         }
     },
 
-  
+  async editExercise(id) {
+    const exercise = this.exercises.find(ex => ex._id === id);
+    if (!exercise) return;
+
+    const newDescription = prompt("Edit exercise description:", exercise.description);
+    
+    if (!newDescription || newDescription.trim() === "") return;
+
+    try {
+      const updatedExercise = await api.updateExercise(id, { description: newDescription });
+
+      this.exercises = this.exercises.map(ex => 
+        ex._id === id ? updatedExercise : ex
+      );
+
+      this.renderExercises();
+    } catch (err) {
+      console.error("Failed to update exercise:", err);
+    }
+  },
+
   // UI error helpers
   showError(message) {
     const { exerciseError } = this.elements;
@@ -142,3 +163,6 @@ window.handleDelete = (id) => {
   exerciseManager.deleteExercise(id);
 };
 
+window.handleEdit = (id, currentDescription) => {
+  exerciseManager.editExercise(id, currentDescription);
+};
