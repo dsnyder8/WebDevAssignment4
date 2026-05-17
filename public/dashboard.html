@@ -5,7 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness App Dashboard</title>
     <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+    
 </head>
 <body>
-    <h1>DASHBOARD</h1>
+<!-- 
+       Dashboard Screen
+-->
+  <section id="dashboard">
+    <h1>EXERCISE DASHBOARD</h1>
+    <button id="logoutBtn">Logout</button>
+    <article class="container">
+
+      <section>
+        <header>
+          <h2>Add New Exercise</h2>
+        </header>
+
+        <form id="exerciseForm">
+
+            <div class="spacing">
+                <label for="description">Description of Exercise</label>
+                <input type="text" id="description" required />
+            </div>
+        
+            <div class="spacing">
+                <label for="targetRepetitions">Target Repetitions (min 1 and max 20)</label>
+                <input type="number" id="targetRepetitions" min="1" max="20"/>
+            </div>
+        
+            <div class="spacing">
+                <label for="targetTimeDuration">Time Duration of Exercise (min 1 and max 180)</label>
+                <input type="number" id="targetTimeDuration" min="1" max="180"/>
+            </div>
+        
+            <div class="spacing">
+                <label for="weightUSE">Weight Used</label>
+                <input type="number" id="weightUSE" />
+            </div>
+        
+            <div class="spacing">
+                <label for="category">Category of Exercise</label>
+                <select id="category">
+                    <option value="Warm-up">Warm-Up</option>
+                    <option value="Cardio">Cardio</option>
+                    <option value="Weightlifting">Weightlifting</option>
+                    <option value="Cool-down">Cool-down</option>
+                </select>
+            </div>
+        
+            <button type="submit">Add New Exercise</button>
+        
+        </form>
+      </section>
+
+
+    <!--
+      MY EXERCISES
+    -->
+      <section>
+        <header>
+          <h2>My EXERCISES</h2>
+          <div id="exerciseStats"></div>
+        </header>
+
+        <div id="loadingMessage">Loading exercise…</div>
+        <div id="exerciseError" class="error"></div>
+        <div id="exerciseList"></div>
+        <p id="emptyMessage" class="hidden">
+          No tasks yet. Add your first task above!
+        </p>
+
+        <select id="filterCategory">
+            <option value="">All</option>
+            <option value="Cardio">Cardio</option>
+            <option value="Weightlifting">Weightlifting</option>
+        </select>
+        
+      </section>
+
+    </article>
+  </section>
 </body>
