@@ -41,7 +41,7 @@ async loadExercises() {
     }
   },
 
-  // Render exercises as plain text (intentional simplicity)
+  // Render exercises as text
 renderExercises() {
     const { exerciseList } = this.elements;
     if (!exerciseList) return;
@@ -71,7 +71,7 @@ renderExercises() {
 
     let htmlContent = "";
 
-    // 1. Group by day
+    // Group by day
     days.forEach(day => {
         const dailyExercises = exercisesToDraw.filter(ex => ex.dayOfWeek === day);
 
