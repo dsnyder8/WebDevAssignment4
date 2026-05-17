@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/", requireAuth, async (req, res) => {
     try {
         const newSchedule = await Schedule.create({
-            user: req.body.user,
+            user: req.user.id,
             dayOfWeek: req.body.dayOfWeek,
             targetBodyPart: req.body.targetBodyPart,
             exercise: req.body.exercise,
@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
     try {
             
 
-            const dbFilter = {};
+            const dbFilter = {user: req.user.id};
 
             //FILITERING
             if (req.query.dayOfWeek !== undefined) {

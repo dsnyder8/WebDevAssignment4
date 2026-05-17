@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-//MAKE SURE TO ADD POPULATE FOR THE JOINS!!!!!!!
+
 const workoutScheduleSchema = new Schema({
 
     //User (Grabs from the UserSchema)
@@ -29,11 +29,10 @@ const workoutScheduleSchema = new Schema({
     },
 
     //Exercise (Grabs from the ExerciseSchema.js)
-    exercise: {
+ exercises: [{ 
         type: Schema.Types.ObjectId,
-        ref: "Exercise",
-        required: false,
-    },
+        ref: "Exercise"
+    }],
 
     //Check to see if it is a rest day
     isRestDay: {
