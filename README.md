@@ -34,30 +34,24 @@ WorkoutSchedules: Relational mapping connecting Users and Exercises to specific 
 
 ## Logging In
 
-There is no registration page yet, so users must be created via the API. A shared test user is already in the dev database:
+You can create a new account directly through the app's Registration page on the frontend.
 
-- Email: smoke@test.com
-- Password: secret123
+If you want to bypass registration and jump straight into the dashboard, a shared test user is already seeded in the development database:
+Email: smoke@test.com
+Password: secret123
 
-To create your own user, send a POST request to 'http://localhost:3000/api/auth/register' (via Postman or curl) with a JSON body:
-
-```
-{
-  "user_name": "your_username",
-  "email": "your@email.com",
-  "password": "atleast6chars",
-  "phone_number": "555-1234"
-}
+For API Testing (Optional):
+If you are testing the backend endpoints directly (via Postman or cURL), you can also create a user by sending a POST request to http://localhost:3000/api/auth/register with the following JSON body:
 ```
 
 All four fields are required. After that, log in at 'http://localhost:3000/' with the email and password you registered.
 
 ## Contributors
 
-Dakota Snyder: Initialized the Node.js environment and established the database connection to MongoDB using an asynchronous function with error handling. Designed the primary User and Exercise schemas, implementing validation through string enums for categories and using ObjectIDs to create a link between users and their data. Developed the initial CRUD logic pre-routes and server patterns that provided a foundation for the team to expand the API in to modular routes.
+Dakota Snyder: Initialized the Node.js environment and established the database connection to MongoDB using an asynchronous function with error handling. Designed the primary User and Exercise schemas, implementing data validation through string enums and using ObjectIDs to link users to their data. Architected full-stack CRUD functionality, successfully bridging modular backend Express routes with a dynamic vanilla JavaScript frontend. Engineered real-time client-side filtering by manipulating central state arrays, allowing for instant UI sorting by category and day without redundant API calls. Implemented browser state management using localStorage to persist user sessions, and ensured clean Separation of Concerns by decoupling DOM event listeners from data rendering logic.
 
 Luke Jordan: implemented the WorkoutSchedule schema and its corresponding route file, ensuring the collection was properly linked to the User and Exercise models. Enhanced all API routes by implementing CRUD principles, including filtering, searching, sorting, and pagination for data retrieval. Additionally, added virtual computed properties to each Mongoose model to improve data formatting and logic within the API.
 
-Brady Sahr: installed the Express framework and developed the initial route files for both Users and Exercises. Responsible for implementing the CRUD operations within those two specific routes to ensure basic functionality.
+Brady Sahr: installed the Express framework and developed the initial route files for both Users and Exercises. Responsible for implementing the CRUD operations within those two specific routes to ensure basic functionality.Created 5-minute example video demonstrating each portion of the project.
 
 Josh Dunlap: Built a Postman collection to test and document every API endpoint. Organized the suite into folders by resource and covered all CRUD operations, query logic, and error handling. Included specific tests to verify the data relationships between Users, Exercises, and Schedules to make sure the system worked together.
