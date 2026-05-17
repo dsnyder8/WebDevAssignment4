@@ -1,4 +1,5 @@
 import { exerciseManager } from './dashboard.js';
+import { api } from './api.js';
 
 const app = {
   elements: {
@@ -34,6 +35,17 @@ const app = {
         });
     } else {
         console.error("CRITICAL: app.js could not find an element with id='filterCategory'");
+    }
+
+    const searchBtn = document.getElementById("searchBtn");
+    const searchInput = document.getElementById("searchInput");
+    if (searchBtn && searchInput) {
+        searchBtn.addEventListener("click", async () => {
+            const term = searchInput.value.trim();
+            const exercises = await api.getExercises(term);
+            exerciseManager.exercises = exercises;
+            exerciseManager.renderExercises();
+        });
     }
 
     //CREATING THE EXERCISE

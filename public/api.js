@@ -17,9 +17,10 @@ function getHeaders() {
     return headers;
 }
 
-async function getExercises() {
+async function getExercises(search="") {
+    const url = search ? `/api/exercises?search=${search}` : "/api/exercises";
     try {
-        const response = await fetch("/api/exercises", {
+        const response = await fetch(url, {
             method: "GET",
             headers: getHeaders(),
         });

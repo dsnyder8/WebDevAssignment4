@@ -84,6 +84,8 @@ renderExercises() {
                     <strong>${exercise.description}</strong>
                     <p>Category: ${exercise.category}</p>
                     <p>Reps: ${exercise.targetRepetitions || "-"}</p>
+                    <p>Duration of Workout (min): ${exercise.targetTimeDuration || "-"} minutes</p>
+                    <p>Weight Used: ${exercise.weightUSE || "-"}lbs</p>
                     <button onclick="handleDelete('${exercise._id}')">Delete</button>
                     <button onclick="handleEdit('${exercise._id}')">Edit</button>
                   </div>
@@ -124,11 +126,24 @@ renderExercises() {
     if (!exercise) return;
 
     const newDescription = prompt("Edit exercise description:", exercise.description);
+    const newCategory = prompt("Edit exercise category:", exercise.category);
+    const newReps = prompt("Edit exercise reps (min 1 / max 20):", exercise.targetRepetitions);
+    const nweMinutes = prompt("Edit exercise minutes (min 1 / max 180):", exercise.targetTimeDuration);
+    const newWeight = prompt("Edit exercise weight:", exercise.weightUSE);
     
     if (!newDescription || newDescription.trim() === "") return;
-
+    if (!newCategory || newCategory.trim() === "") return;
+    
+    //Updating every field (default to old value for reps, minutes, and weights if given no input)
     try {
-      const updatedExercise = await api.updateExercise(id, { description: newDescription });
+      const updatedExercise = await api.updateExercise(id, { 
+        description: newDescription, 
+        category: newCategory, 
+        targetRepetitions: newReps || exercise.targetRepetitions, 
+        targetTimeDuration: nweMinutes || exercise.targetTimeDuration, 
+        weightUSE: newWeight || exercise.weightUSE
+    });
+      
 
       this.exercises = this.exercises.map(ex => 
         ex._id === id ? updatedExercise : ex
