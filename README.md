@@ -51,6 +51,6 @@ Dakota Snyder: Initialized the Node.js environment and established the database 
 
 Luke Jordan: implemented the WorkoutSchedule schema and its corresponding route file, ensuring the collection was properly linked to the User and Exercise models. Enhanced all API routes by implementing CRUD principles, including filtering, searching, sorting, and pagination for data retrieval. Additionally, added virtual computed properties to each Mongoose model to improve data formatting and logic within the API.
 
-Brady Sahr: installed the Express framework and developed the initial route files for both Users and Exercises. Responsible for implementing the CRUD operations within those two specific routes to ensure basic functionality.Created 5-minute example video demonstrating each portion of the project.
+Brady Sahr: installed the Express framework and developed the initial route files for both Users and Exercises. Responsible for implementing the CRUD operations within those two specific routes to ensure basic functionality. Created 5-minute example video demonstrating each portion of the project.
 
 Josh Dunlap: Built a Postman collection to test and document every API endpoint. Organized the suite into folders by resource and covered all CRUD operations, query logic, and error handling. Included specific tests to verify the data relationships between Users, Exercises, and Schedules to make sure the system worked together.
