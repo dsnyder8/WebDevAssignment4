@@ -42,7 +42,6 @@ Password: secret123
 
 For API Testing (Optional):
 If you are testing the backend endpoints directly (via Postman or cURL), you can also create a user by sending a POST request to http://localhost:3000/api/auth/register with the following JSON body:
-```
 
 All four fields are required. After that, log in at 'http://localhost:3000/' with the email and password you registered.
 
