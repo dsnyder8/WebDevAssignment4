@@ -9,8 +9,8 @@ export const exerciseManager = {
     exerciseForm: document.getElementById('exerciseForm')
   },
 
-  // Load Exercises from API
-  async loadExercises() {
+// Load Exercises from API
+async loadExercises() {
     this.clearError();
 
     try {
@@ -54,6 +54,8 @@ export const exerciseManager = {
         <h3>${exercise.description}</h3>
         <p>Category: ${exercise.category}</p>
         <p>Reps: ${exercise.targetRepetitions || "-"}</p>
+        <p>Duration: ${exercise.targetTimeDuration || "-"} Minutes</p>
+        <p>Weight Used: ${exercise.weightUSE || "-"} Pounds</p>
         <button onclick="handleDelete('${exercise._id}')">
           Delete
         </button>
