@@ -27,7 +27,8 @@ const app = {
         targetTimeDuration: document.getElementById("targetTimeDuration").value,
         weightUSE: document.getElementById("weightUSE").value,
         category: document.getElementById("category").value,
-        user: user._id
+        user: user._id,
+        dayOfWeek: document.getElementById("dayOfWeek").value
     };
       await exerciseManager.createExercise(exerciseData);
 

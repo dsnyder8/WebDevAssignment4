@@ -65,6 +65,7 @@ router.post("/", requireAuth,async (req, res) => {
 			targetTimeDuration: req.body.targetTimeDuration,
 			weightUSE: req.body.weightUSE,
 			user: req.body.user,
+			dayOfWeek: req.body.dayOfWeek,
 		});
 
 		res.status(201).json(newExercise);

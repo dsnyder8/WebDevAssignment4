@@ -34,6 +34,7 @@ const ExerciseSchema = new Schema({
     ref: "User",
     required: true,
   },
+  dayOfWeek: { type: String, default: "Monday" }
 }, 
 {timestamps: true, toJSON: { virtuals: true }});
 

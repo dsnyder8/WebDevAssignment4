@@ -40,27 +40,45 @@ async loadExercises() {
   },
 
   // Render exercises as plain text (intentional simplicity)
-  renderExercises() {
+renderExercises() {
     const { exerciseList } = this.elements;
     if (!exerciseList) return;
 
     if (this.exercises.length === 0) {
-      exerciseList.textContent = 'No exercises found.';
+      exerciseList.innerHTML = '<p>No tasks yet. Add your first task above!</p>';
       return;
     }
 
-    exerciseList.innerHTML = this.exercises.map(exercise => `
-      <div class="exercise-card">
-        <h3>${exercise.description}</h3>
-        <p>Category: ${exercise.category}</p>
-        <p>Reps: ${exercise.targetRepetitions || "-"}</p>
-        <p>Duration: ${exercise.targetTimeDuration || "-"} Minutes</p>
-        <p>Weight Used: ${exercise.weightUSE || "-"} Pounds</p>
-        <button onclick="handleDelete('${exercise._id}')">
-          Delete
-        </button>
-      </div>
-    `).join("");
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    let htmlContent = "";
+
+    // 1. Group the exercises that actually have a day assigned
+    days.forEach(day => {
+        const dailyExercises = this.exercises.filter(ex => ex.dayOfWeek === day);
+
+        if (dailyExercises.length > 0) {
+            htmlContent += `<h3>${day}</h3>`;
+            
+            dailyExercises.forEach(exercise => {
+                htmlContent += `
+                  <div class="exercise-card">
+                    <strong>${exercise.description}</strong>
+                    <p>Category: ${exercise.category}</p>
+                    <p>Reps: ${exercise.targetRepetitions || "-"}</p>
+                    <p>Time: ${exercise.targetTimeDuration || "-"}</p>
+                    <p>Weight: ${exercise.weightUSE || "-"}</p>
+                    <button onclick="handleDelete('${exercise._id}')">Delete</button>
+                  </div>
+                `;
+            });
+            htmlContent += `<hr>`;
+        }
+    });
+
+    
+
+
+    exerciseList.innerHTML = htmlContent;
   },
 
   // DELETING AN EXERCISE FROM THE DASHBOARD
@@ -98,3 +116,4 @@ async loadExercises() {
 window.handleDelete = (id) => {
   exerciseManager.deleteExercise(id);
 };
+
