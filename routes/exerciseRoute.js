@@ -6,9 +6,9 @@ import { requireAuth } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 // GET ALL
-router.get("/", async (req, res) => {
+router.get("/", requireAuth, async (req, res) => {
 	try {
-		const dbFilter = {};
+		const dbFilter = {user: req.user.id};
 
 		//FILITERING
 		if (req.query.category !== undefined) {
@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
 });
 
 // GET ONE
-router.get("/:id", async (req, res) => {
+router.get("/:id", requireAuth, async (req, res) => {
 	try {
 		const exercise = await Exercise.findById(req.params.id).populate("user");
 

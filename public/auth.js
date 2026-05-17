@@ -1,10 +1,7 @@
-// Grab both forms (one of these will be 'null' depending on what page you are on)
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
 
-// ==========================================
-// 1. LOGIN LOGIC (Only runs if on index.html)
-// ==========================================
+
 if (loginForm) {
     const loginMessage = document.getElementById("message");
     const loginBtn = loginForm.querySelector("button[type='submit']");
