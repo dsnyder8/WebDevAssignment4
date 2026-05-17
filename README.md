@@ -58,3 +58,7 @@ Luke Jordan: implemented the WorkoutSchedule schema and its corresponding route 
 Brady Sahr: installed the Express framework and developed the initial route files for both Users and Exercises. Responsible for implementing the CRUD operations within those two specific routes to ensure basic functionality. Created 5-minute example video demonstrating each portion of the project. 
 
 Josh Dunlap: Built a Postman collection to test and document every API endpoint. Organized the suite into folders by resource and covered all CRUD operations, query logic, and error handling. Included specific tests to verify the data relationships between Users, Exercises, and Schedules to make sure the system worked together.
+
+## Video Demonstration
+
+[![Fitness API Project Video](https://img.youtube.com/vi/brUvnQfEMh0/maxresdefault.jpg)](https://youtu.be/brUvnQfEMh0)
