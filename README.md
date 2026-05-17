@@ -6,9 +6,13 @@ Names: Luke Jordan, Josh Dunlap, Brady Sahr, Dakota Snyder
 
 Date: April 29th, 2026.
 
-## Overview
+## Overview (Assignment 4)
 
 Fitness API uses a RESTful backend that is built with Node.js, Express Middleware, and MongoDB. This API provides a system for managing a user's fitness data, that focuses on their individual exercises, Daily and Weekly routine for a more personalized workout routine that could be used as a foundation for a more refined fitness application. This project demonstrates the use of backend development principles, including relational database modeling using MongoDB, securely handling user data, and implementing CRUD (Create,Read,Update, Delete) functionality using an Express.js server.
+
+## Overview (Assignment 5)
+The first part of this project involved building a Fitness API using a RESTful backend built with Node.js, Express, and MongoDB. This API provides a system for managing a user's fitness data, focusing on individual exercises and daily/weekly routines for a more personalized workout experience. This backend served as the foundation for the second part of the project. 
+The second part involved making the Fitness API full-stack by building a working web application centered around exercise management and weekly workout scheduling. The application allows users to register and log in securely using JWT-based authentication, and once authenticated, users can create, edit, delete, and view their workout exercises. Along with these CRUD features, a search bar allows users to find specific exercises by description, and a filter dropdown allows users to sort exercises by day of the week or exercise category. Overall, the application supports all three backend models and uses JavaScript and HTML to display everything on the front end. 
 
 ## Collections
 
